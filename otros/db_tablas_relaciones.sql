@@ -59,6 +59,10 @@ CREATE TABLE Tramite (
   PRIMARY KEY (id_tramite),
   FOREIGN KEY (id_documento) REFERENCES Documento (id_documento) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+ALTER TABLE Tramite
+ADD COLUMN id_area INT DEFAULT NULL,
+ADD FOREIGN KEY (id_area) REFERENCES Area (id_area) ON DELETE SET NULL ON UPDATE CASCADE;
+
 
 -- Tabla Area
 CREATE TABLE Area (

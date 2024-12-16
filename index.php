@@ -22,7 +22,7 @@ $rol = $_SESSION['rol'];
             <p>Eres un administrador. Tienes acceso a todas las funciones.</p>
             <a class="btn" href="admin_dashboard.php">Ir al Panel de Administración</a>
         <?php else: ?>
-            <p>Eres un usuario común. Puedes consultar y gestionar tus trámites.</p>
+            <p>Eres un usuario. Puedes consultar y gestionar tus trámites.</p>
             <a class="btn" href="tramites.php">Consultar Mis Trámites</a>
         <?php endif; ?>
         <a class="btn btn-secondary" href="logout.php">Cerrar Sesión</a>
