@@ -9,8 +9,8 @@
 8. comprobar si todo esta bien
 
 
-# Conexcion de bases de datos 
-
+# Conexión de bases de datos 
+```
 <?php
 $host = "localhost";
 $dbname = "db_tramite_u3"; # nombre de la base de datos puesto en el navicat
@@ -25,3 +25,4 @@ try {
     exit;
 }
 ?>
+```
