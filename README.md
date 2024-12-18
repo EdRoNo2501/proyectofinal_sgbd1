@@ -1,3 +1,11 @@
+# Integrantes
+- Rojas Nolasco Edgard Jesus (100%)
+- Quiroz Acho Daniel Mauricio (100%)
+- Mori Perez Luis Alberto (100%)
+- Ramos Correa Marcelo (100%)
+- Bautista Camila (100%)
+
+
 # Tutorial 
 1. Descargar el zip
 2. Extraer el zip
