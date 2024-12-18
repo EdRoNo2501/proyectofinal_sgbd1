@@ -34,4 +34,4 @@ try {
 - usu: pquispe@lamolina.edu.pe pass: usuario 3
 
 
-> Si no funciona db_tablas_relacionales probar con resplado_tablas
+> Ejecutar la database en la carpeta docs tablas_database (esta en orden) uno por uno
