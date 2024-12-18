@@ -9,7 +9,6 @@
 8. comprobar si todo esta bien
 
 
-
 # Conexión de bases de datos 
 ```
 <?php
@@ -34,4 +33,6 @@ try {
 - usu: pquispe@lamolina.edu.pe pass: usuario 3
 
 
-> Si no funciona db_tablas_relacionales probar con resplado_tablas
+> Si no funciona db_tablas_relacionales probar con respaldo_tablas
+
+.
