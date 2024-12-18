@@ -7,22 +7,27 @@ CREATE TABLE Usuario (
   apellidos VARCHAR(200) NOT NULL,
   cargo VARCHAR(200),
   correo VARCHAR(200) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
   PRIMARY KEY (id_usuario)
 )
 
 
 -- agrega columna contraseña para la tabla usuario
-ALTER TABLE Usuario ADD COLUMN password VARCHAR(255) NOT NULL; 
+-- ALTER TABLE Usuario ADD COLUMN password VARCHAR(255) NOT NULL; 
 
 
+-- Primero se crea al admin que gestionara los usuarios 
 UPDATE Usuario 
 SET password = '$2y$10$w2xpglesITs2/uFDuLfUV.4uuhdnDwdK7h8BCgpozdhE8.PIpPKOu' -- contra: admin'
 WHERE correo = 'lagarcia@lamolina.edu.pe'; 
 
+-- Los otros usuarios previamente creados 
 
-UPDATE Usuario 
-SET password = '$2y$10$QiFpG7P.Y2lSc.aAkLDtcuAp5rE22/rtTDFT5rUuKZTPi/FEQfRz6' -- Contraseña: estudiante
-WHERE correo = 'amlopez@lamolina.edu.pe';
+INSERT INTO `usuario` VALUES (9, 'Jesus', 'Rojas', 'Estudiante ', 'jrojas@lamolina.edu.pe', '$2y$10$T6Nd2HGFVb9b2pVchawloefo23WijsesKS0nnXP7qpHZNlNSBAt56');
+INSERT INTO `usuario` VALUES (10, 'Pablo', 'Quispe', 'Profesor', 'pquispe@lamolina.edu.pe', '$2y$10$e.WV3k4RT9DUyN/b2Ds3kuW9vGV0aOEVtUbVFMVZdiiq8TRa6JBIO');
+INSERT INTO `usuario` VALUES (11, 'Roxana ', 'Perez', 'Estudiante', 'rperez@lamolina.edu.pe', '$2y$10$WWYJRBV9I5O1KjUHVctW1OJVo33BSD7AwnoZ8zLjArxc2qEikK.Fy');
+
+
 
 
 -- Tabla Rol
@@ -31,6 +36,14 @@ CREATE TABLE Rol (
   permisos VARCHAR(250) NOT NULL,
   PRIMARY KEY (id_rol)
 );
+
+-- datos: 
+INSERT INTO Rol (permisos) VALUES
+('Gestión de documentos'),
+('Seguimiento de trámites'),
+('Administración de usuarios');
+
+
 
 -- Crear las tablas relacionadas con claves foráneas ---------------------------
 
@@ -49,15 +62,27 @@ CREATE TABLE Documento (
   FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
+-- Datos para la tabla Documento
+INSERT INTO `documento` VALUES (6, 'Oficio', '2024-12-18', 'Jesus Rojas', 'Luis Alberto', 'Actualización de datos', 'Pendiente', 'actualización, datos personales', 9);
+INSERT INTO `documento` VALUES (7, 'Oficio', '2024-12-18', 'Pablo Quispe', 'Luis Alberto', 'cambio de horario', 'Pendiente', 'horario', 10);
+INSERT INTO `documento` VALUES (8, 'Resolución ', '2024-12-18', 'Roxana Perez', 'Luis Alberto', 'Solicitud de certificado', 'Pendiente', 'certificado', 11);
+
+
+
+
+
+
 -- Tabla Tramite
 CREATE TABLE Tramite (
   id_tramite INT NOT NULL AUTO_INCREMENT,
   fecha_inicio DATE NOT NULL,
   fecha_fin DATE DEFAULT NULL,
   estado_tramite ENUM('Pendiente', 'En Proceso', 'Finalizado') NOT NULL,
-  id_documento INT NOT NULL,
+  id_documento INT NULL,
+  `id_area` int NULL DEFAULT NULL,
   PRIMARY KEY (id_tramite),
   FOREIGN KEY (id_documento) REFERENCES Documento (id_documento) ON DELETE RESTRICT ON UPDATE RESTRICT
+
 );
 ALTER TABLE Tramite
 ADD COLUMN id_area INT DEFAULT NULL,
@@ -104,39 +129,25 @@ CREATE TABLE Archivo (
 
 -- Insertar datos de ejemplo ---------------------------------------------------
 
--- Datos para la tabla Usuario
-INSERT INTO Usuario (nombres, apellidos, cargo, correo) VALUES
-('Juan Carlos', 'Pérez Huamán', 'Profesor', 'jcperez@lamolina.edu.pe'),
-('Ana María', 'Lopez Torres', 'Estudiante', 'amlopez@lamolina.edu.pe'),
-('Luis Alberto', 'García Mendoza', 'Administrador', 'lagarcia@lamolina.edu.pe');
 
--- Datos para la tabla Rol
-INSERT INTO Rol (permisos) VALUES
-('Gestión de documentos'),
-('Seguimiento de trámites'),
-('Administración de usuarios');
 
--- Datos para la tabla Documento
-INSERT INTO Documento (tipo_documento, fecha_recepcion, emisor, receptor, motivo, estado, palabras_clave, id_usuario) VALUES
-('Memorándum', '2024-12-01', 'Oficina de Administración', 'Decanato', 'Solicitud de presupuesto', 'Pendiente', 'presupuesto, administración', 3),
-('Oficio', '2024-12-02', 'Dirección Académica', 'Profesor Juan Carlos Pérez', 'Entrega de horarios', 'En Proceso', 'horarios, academia', 1);
 
 -- Datos para la tabla Tramite
-INSERT INTO Tramite (fecha_inicio, fecha_fin, estado_tramite, id_documento) VALUES
-('2024-12-01', NULL, 'Pendiente', 1),
-('2024-12-02', '2024-12-05', 'Finalizado', 2);
+INSERT INTO `tramite` VALUES (16, '2024-12-18', NULL, 'Pendiente', 6, 1);
+INSERT INTO `tramite` VALUES (17, '2024-12-18', NULL, 'Pendiente', 7, 2);
+INSERT INTO `tramite` VALUES (18, '2024-12-18', NULL, 'Pendiente', 8, 1);
 
 -- Datos para la tabla Area
-INSERT INTO Area (nombre_area, descripcion, id_documento) VALUES
+ INSERT INTO Area (nombre_area, descripcion, id_documento) VALUES
 ('Oficina de Administración', 'Encargada de gestionar recursos y logística', 1),
 ('Dirección Académica', 'Responsable de la planificación académica', 2);
 
 -- Datos para la tabla Seguimiento
-INSERT INTO Seguimiento (fecha_seguimiento, observacion, estado_actual, responsable_nombre, id_tramite, id_rol) VALUES
-('2024-12-03', 'Documento revisado por el decano', 'En Proceso', 'Juan Carlos Pérez', 1, 2),
-('2024-12-06', 'Trámite finalizado y archivado', 'Finalizado', 'Ana María Lopez', 2, 1);
+--INSERT INTO Seguimiento (fecha_seguimiento, observacion, estado_actual, responsable_nombre, id_tramite, id_rol) VALUES
+
 
 -- Datos para la tabla Archivo
 INSERT INTO Archivo (nombre_archivo, tipo_archivo, tamanio, ruta, id_documento) VALUES
-('Solicitud_Presupuesto.pdf', 'application/pdf', 2048, '/uploads/documentos/Solicitud_Presupuesto.pdf', 1),
-('Horario_Entrega.pdf', 'application/pdf', 1024, '/uploads/documentos/Horario_Entrega.pdf', 2);
+INSERT INTO `archivo` VALUES (11, 'oficio300.pdf', 'application/pdf', 0, 'uploads/documentos/oficio300.pdf', 6);
+INSERT INTO `archivo` VALUES (12, 'oficio400.pdf', 'application/pdf', 0, 'uploads/documentos/oficio400.pdf', 7);
+INSERT INTO `archivo` VALUES (13, 'resolucion224.pdf', 'application/pdf', 0, 'uploads/documentos/resolucion224.pdf', 8);

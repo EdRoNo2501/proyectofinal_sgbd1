@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$dbname = "db_tramite_u3";
+$dbname = "db_tramite_u3"; 
 $username = "root";
 $password = "";
 

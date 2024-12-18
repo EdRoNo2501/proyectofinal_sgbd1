@@ -7,3 +7,31 @@
 6. abrir en xampp admin
 7. en la direccion de link poner localhost/nombredelacarpeta
 8. comprobar si todo esta bien
+
+
+
+# Conexión de bases de datos 
+```
+<?php
+$host = "localhost";
+$dbname = "db_tramite_u3"; # nombre de la base de datos puesto en el navicat
+$username = "root";
+$password = "";
+
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
+    exit;
+}
+?>
+```
+
+# Cuentas creadas 
+- usu: jrojas@lamolina.edu.pe pass: usuario 1
+- usu: rperez@lamolina.edu.pe pass: usuario 2
+- usu: pquispe@lamolina.edu.pe pass: usuario 3
+
+
+> Si no funciona db_tablas_relacionales probar con resplado_tablas
